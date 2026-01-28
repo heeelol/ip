@@ -9,7 +9,7 @@ public class Yoru {
         System.out.println(line);
 
         Scanner scanner = new Scanner(System.in);
-        String[] list = new String[100];
+        Task[] tasks = new Task[100];
         int taskCount = 0;
 
         while (true) {
@@ -22,11 +22,23 @@ public class Yoru {
                 return;
             } else if (reply.equalsIgnoreCase("list")) {
                 for (int i = 0; i < taskCount; i++) {
-                    System.out.println((i + 1) + ". " + list[i]);
+                    System.out.println((i + 1) + ". " + tasks[i]);
                 }
                 System.out.println(line);
+            } else if (reply.startsWith("mark ")) {
+                int taskIndex = Integer.parseInt(reply.substring(5)) - 1;
+                tasks[taskIndex].markAsDone();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println(" " + tasks[taskIndex]);
+                System.out.println(line);
+            } else if (reply.startsWith("unmark ")) {
+                int taskIndex = Integer.parseInt(reply.substring(7)) - 1;
+                tasks[taskIndex].markAsNotDone();
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println(" " + tasks[taskIndex]);
+                System.out.println(line);
             } else {
-                list[taskCount] = reply;
+                tasks[taskCount] = new Task(reply);
                 taskCount++;
                 System.out.println("added: " + reply);
                 System.out.println(line);
