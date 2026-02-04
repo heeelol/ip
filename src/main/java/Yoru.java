@@ -49,6 +49,36 @@ public class Yoru {
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println(" " + tasks[taskIndex]);
                 System.out.println(LINE_SEPARATOR);
+            } else if (reply.startsWith("todo ")) {
+                String description = reply.substring(5);
+                tasks[taskCount] = new Todo(description);
+                taskCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                System.out.println(LINE_SEPARATOR);
+            } else if (reply.startsWith("deadline ")) {
+                String[] parts = reply.substring(9).split(" /by ", 2);
+                String description = parts[0];
+                String by = parts[1];
+                tasks[taskCount] = new Deadline(description, by);
+                taskCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                System.out.println(LINE_SEPARATOR);
+            } else if (reply.startsWith("event ")) {
+                String[] parts = reply.substring(6).split(" /from ", 2);
+                String description = parts[0];
+                String[] timeParts = parts[1].split(" /to ", 2);
+                String from = timeParts[0];
+                String to = timeParts[1];
+                tasks[taskCount] = new Event(description, from, to);
+                taskCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                System.out.println(LINE_SEPARATOR);
             } else {
                 tasks[taskCount] = new Task(reply);
                 taskCount++;
