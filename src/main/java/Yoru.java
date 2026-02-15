@@ -1,4 +1,8 @@
 import java.util.Scanner;
+import yoru.Deadline;
+import yoru.Event;
+import yoru.Task;
+import yoru.Todo;
 
 /**
  * Main class for the Yoru chatbot application.
