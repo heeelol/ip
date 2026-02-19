@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import yoru.Deadline;
 import yoru.Event;
@@ -10,7 +11,7 @@ import yoru.Todo;
  */
 public class Yoru {
     private static final String LINE_SEPARATOR = "_______________________________________";
-    private static final int MAX_TASKS = 100;
+    //private static final int MAX_TASKS = 100;
     private static final String COMMAND_BYE = "bye";
     private static final String COMMAND_LIST = "list";
     private static final String COMMAND_MARK = "mark ";
@@ -28,7 +29,8 @@ public class Yoru {
         showWelcome();
 
         Scanner scanner = new Scanner(System.in);
-        Task[] tasks = new Task[MAX_TASKS];
+        //Task[] tasks = new Task[MAX_TASKS];
+        ArrayList<Task> tasks = new ArrayList<>();
         int taskCount = 0;
 
         while (true) {
@@ -68,11 +70,11 @@ public class Yoru {
         }
     }
 
-    private static void checkTaskListFull(int taskCount) throws YoruException {
-    if (taskCount >= MAX_TASKS) {
-        throw new YoruException("Task list is full. Cannot add more tasks.");
-    }
-}
+//     private static void checkTaskListFull(int taskCount) throws YoruException {
+//     if (taskCount >= MAX_TASKS) {
+//         throw new YoruException("Task list is full. Cannot add more tasks.");
+//     }
+// }
 
     private static void showWelcome() {
         System.out.println(LINE_SEPARATOR);
@@ -86,44 +88,44 @@ public class Yoru {
         System.out.println(LINE_SEPARATOR);
     }
 
-    private static void showTaskList(Task[] tasks, int taskCount) {
+    private static void showTaskList(ArrayList<Task> tasks, int taskCount) {
         System.out.println("     Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            System.out.println("     " + (i + 1) + "." + tasks[i]);
+            System.out.println("     " + (i + 1) + "." + tasks.get(i));
         }
         System.out.println(LINE_SEPARATOR);
     }
 
-    private static void handleMarkTask(String reply, Task[] tasks) {
+    private static void handleMarkTask(String reply, ArrayList<Task> tasks) {
         int taskIndex = Integer.parseInt(reply.substring(COMMAND_MARK.length())) - 1;
-        tasks[taskIndex].markAsDone();
+        tasks.get(taskIndex).markAsDone();
         System.out.println("     Nice! I've marked this task as done:");
-        System.out.println("       " + tasks[taskIndex]);
+        System.out.println("       " + tasks.get(taskIndex));
         System.out.println(LINE_SEPARATOR);
     }
 
-    private static void handleUnmarkTask(String reply, Task[] tasks) {
+    private static void handleUnmarkTask(String reply, ArrayList<Task> tasks) {
         int taskIndex = Integer.parseInt(reply.substring(COMMAND_UNMARK.length())) - 1;
-        tasks[taskIndex].markAsNotDone();
+        tasks.get(taskIndex).markAsNotDone();
         System.out.println("     OK, I've marked this task as not done yet:");
-        System.out.println("       " + tasks[taskIndex]);
+        System.out.println("       " + tasks.get(taskIndex));
         System.out.println(LINE_SEPARATOR);
     }
 
-    private static int handleTodoTask(String reply, Task[] tasks, int taskCount) throws YoruException {
-        checkTaskListFull(taskCount);
+    private static int handleTodoTask(String reply, ArrayList<Task> tasks, int taskCount) throws YoruException {
+        //checkTaskListFull(taskCount);
         String description = reply.substring(COMMAND_TODO.length());
         if (description.isEmpty()) {
             throw new YoruException("The description of a todo cannot be empty.");
         }
-        tasks[taskCount] = new Todo(description);
+        tasks.add(new Todo(description));
         taskCount++;
-        showTaskAdded(tasks[taskCount - 1], taskCount);
+        showTaskAdded(tasks.get(taskCount - 1), taskCount);
         return taskCount;
     }
 
-    private static int handleDeadlineTask(String reply, Task[] tasks, int taskCount) throws YoruException {
-        checkTaskListFull(taskCount);
+    private static int handleDeadlineTask(String reply, ArrayList<Task> tasks, int taskCount) throws YoruException {
+        //checkTaskListFull(taskCount);
         String args = reply.substring(COMMAND_DEADLINE.length());
 
         if (!args.contains(" /by ")) {
@@ -133,14 +135,14 @@ public class Yoru {
         String[] parts = reply.substring(COMMAND_DEADLINE.length()).split(" /by ", 2);
         String description = parts[0];
         String by = parts[1];
-        tasks[taskCount] = new Deadline(description, by);
+        tasks.add(new Deadline(description, by));
         taskCount++;
-        showTaskAdded(tasks[taskCount - 1], taskCount);
+        showTaskAdded(tasks.get(taskCount - 1), taskCount);
         return taskCount;
     }
 
-    private static int handleEventTask(String reply, Task[] tasks, int taskCount) throws YoruException {
-        checkTaskListFull(taskCount);
+    private static int handleEventTask(String reply, ArrayList<Task> tasks, int taskCount) throws YoruException {
+        //checkTaskListFull(taskCount);
         String args = reply.substring(COMMAND_EVENT.length());
 
         if (!args.contains(" /from ") || !args.contains(" /to ")) {
@@ -152,9 +154,9 @@ public class Yoru {
         String[] timeParts = parts[1].split(" /to ", 2);
         String from = timeParts[0];
         String to = timeParts[1];
-        tasks[taskCount] = new Event(description, from, to);
+        tasks.add(new Event(description, from, to));
         taskCount++;
-        showTaskAdded(tasks[taskCount - 1], taskCount);
+        showTaskAdded(tasks.get(taskCount - 1), taskCount);
         return taskCount;
     }
 
