@@ -2,6 +2,7 @@ package yoru;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.ArrayList;
 
 /**
  * Handles loading and saving tasks to disk.
@@ -10,36 +11,35 @@ public class Storage {
     private static final String FILE_PATH = "./data/yoru.txt";
 
     // Saves the current task list to disk.
-    public static void save(Task[] tasks, int taskCount) {
-        try {
-            Files.createDirectories(Paths.get("./data"));
-            try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
-                for (int i = 0; i < taskCount; i++) {
-                    writer.println(tasks[i].toFileFormat());
-                }
+    public static void save(ArrayList<Task> tasks) {
+    try {
+        Files.createDirectories(Paths.get("./data"));
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
+            for (Task task : tasks) {
+                writer.println(task.toFileFormat());
             }
-        } catch (IOException e) {
-            System.out.println("     Warning: Could not save tasks: " + e.getMessage());
         }
+    } catch (IOException e) {
+        System.out.println("     Warning: Could not save tasks: " + e.getMessage());
     }
+}
 
     /**
      * Loads tasks from disk into the provided array.
      * Returns the number of tasks loaded.
      */
-    public static int load(Task[] tasks) {
-        int taskCount = 0;
+    public static ArrayList<Task> load() {
+        ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(FILE_PATH);
         if (!file.exists()) {
-            return taskCount;  // first run, no file yet
+            return tasks;  // Return an empty list if the file does not exist
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 try {
-                    tasks[taskCount] = parseTask(line);
-                    taskCount++;
+                    tasks.add(parseTask(line));
                 } catch (Exception e) {
                     System.out.println("     Warning: Skipping corrupted entry: " + line);
                 }
@@ -47,7 +47,7 @@ public class Storage {
         } catch (IOException e) {
             System.out.println("     Warning: Could not load tasks: " + e.getMessage());
         }
-        return taskCount;
+        return tasks;
     }
 
     private static Task parseTask(String line) throws Exception {

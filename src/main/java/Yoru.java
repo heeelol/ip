@@ -30,7 +30,7 @@ public class Yoru {
         showWelcome();
 
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = Storage.load()
+        ArrayList<Task> tasks = Storage.load();
 
         while (true) {
             try {
@@ -45,21 +45,22 @@ public class Yoru {
                     showTaskList(tasks);
                 } else if (reply.startsWith(COMMAND_MARK)) {
                     handleMarkTask(reply, tasks);
-                    Storage.save(tasks, taskCount);
+                    Storage.save(tasks);
                 } else if (reply.startsWith(COMMAND_UNMARK)) {
                     handleUnmarkTask(reply, tasks);
-                    Storage.save(tasks, taskCount);
+                    Storage.save(tasks);
                 } else if (reply.startsWith(COMMAND_TODO)) {
                     handleTodoTask(reply, tasks);
-                    Storage.save(tasks, taskCount);
+                    Storage.save(tasks);
                 } else if (reply.startsWith(COMMAND_DEADLINE)) {
                     handleDeadlineTask(reply, tasks);
-                    Storage.save(tasks, taskCount);
+                    Storage.save(tasks);
                 } else if (reply.startsWith(COMMAND_EVENT)) {
                     handleEventTask(reply, tasks);
+                    Storage.save(tasks);
                 } else if (reply.startsWith(COMMAND_DELETE)) {
                     handleDeleteTask(reply, tasks);
-                    Storage.save(tasks, taskCount);
+                    Storage.save(tasks);
                 } else {
                     throw new YoruException("I don't understand that command.");
                 }
