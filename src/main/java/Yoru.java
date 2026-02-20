@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import yoru.Deadline;
 import yoru.Event;
+import yoru.Storage;
 import yoru.Task;
 import yoru.Todo;
 
@@ -29,7 +30,7 @@ public class Yoru {
 
         Scanner scanner = new Scanner(System.in);
         Task[] tasks = new Task[MAX_TASKS];
-        int taskCount = 0;
+        int taskCount = Storage.load(tasks);
 
         while (true) {
             try {
@@ -44,14 +45,19 @@ public class Yoru {
                     showTaskList(tasks, taskCount);
                 } else if (reply.startsWith(COMMAND_MARK)) {
                     handleMarkTask(reply, tasks);
+                    Storage.save(tasks, taskCount);
                 } else if (reply.startsWith(COMMAND_UNMARK)) {
                     handleUnmarkTask(reply, tasks);
+                    Storage.save(tasks, taskCount);
                 } else if (reply.startsWith(COMMAND_TODO)) {
                     taskCount = handleTodoTask(reply, tasks, taskCount);
+                    Storage.save(tasks, taskCount);
                 } else if (reply.startsWith(COMMAND_DEADLINE)) {
                     taskCount = handleDeadlineTask(reply, tasks, taskCount);
+                    Storage.save(tasks, taskCount);
                 } else if (reply.startsWith(COMMAND_EVENT)) {
                     taskCount = handleEventTask(reply, tasks, taskCount);
+                    Storage.save(tasks, taskCount);
                 } else {
                     throw new YoruException("I don't understand that command.");
                 }
