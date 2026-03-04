@@ -10,11 +10,20 @@ import java.util.ArrayList;
 public class Storage {
     private final String filePath;
 
+    /**
+     * Creates a storage handler for the given file path.
+     *
+     * @param filePath Path of the task storage file.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
-    // Saves the current task list to disk.
+    /**
+     * Saves all tasks to disk.
+     *
+     * @param tasks Tasks to persist.
+     */
     public void save(ArrayList<Task> tasks) {
     try {
         Path path = Paths.get(filePath);
@@ -33,8 +42,9 @@ public class Storage {
 }
 
     /**
-     * Loads tasks from disk into the provided array.
-     * Returns the number of tasks loaded.
+     * Loads tasks from disk.
+     *
+     * @return List of tasks loaded from storage.
      */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -58,23 +68,23 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Parses one serialized task line into a {@link Task} object.
+     *
+     * @param line Serialized task line.
+     * @return Parsed task.
+     * @throws Exception If the line is malformed or has an unknown task type.
+     */
     private static Task parseTask(String line) throws Exception {
         String[] parts = line.split(" \\| ");
         boolean isDone = parts[1].equals("1");
         Task task;
         
         switch (parts[0]) {
-            case "T":
-                task = new Todo(parts[2]);
-                break;
-            case "D":
-                task = new Deadline(parts[2], parts[3]);
-                break;
-            case "E":
-                task = new Event(parts[2], parts[3], parts[4]);
-                break;
-            default:
-                throw new Exception("Unknown task type: " + parts[0]);
+        case "T" -> task = new Todo(parts[2]);
+        case "D" -> task = new Deadline(parts[2], parts[3]);
+        case "E" -> task = new Event(parts[2], parts[3], parts[4]);
+        default -> throw new Exception("Unknown task type: " + parts[0]);
         }
         if (isDone) {
             task.markAsDone();

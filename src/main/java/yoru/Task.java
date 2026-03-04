@@ -25,18 +25,36 @@ public abstract class Task {
         return (isDone ? "X" : " ");
     }
 
+    /**
+     * Marks this task as completed.
+     */
     public void markAsDone() {
         this.isDone = true;
     }
 
+    /**
+     * Marks this task as not completed.
+     */
     public void markAsNotDone() {
         this.isDone = false;
     }
 
+    /**
+     * Checks whether the task description contains the given keyword.
+     * Matching is case-insensitive.
+     *
+     * @param keyword Keyword to search for.
+     * @return True if the keyword appears in the description.
+     */
     public boolean containsKeyword(String keyword) {
         return description.toLowerCase().contains(keyword.toLowerCase());
     }
 
+    /**
+     * Converts the task into the storage file format.
+     *
+     * @return A serialized representation of the task.
+     */
     public abstract String toFileFormat();
 
     /**

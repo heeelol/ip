@@ -11,12 +11,20 @@ public class Yoru {
     private final TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Creates a Yoru bot instance backed by the given storage file path.
+     *
+     * @param filePath Path to the task storage file.
+     */
     public Yoru(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
     }
 
+    /**
+     * Starts the main command loop of the chatbot.
+     */
     public void run() {
         ui.showWelcome();
 

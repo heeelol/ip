@@ -1,5 +1,8 @@
 package yoru;
 
+/**
+ * Parses user commands and dispatches corresponding task operations.
+ */
 public class Parser {
     private static final String COMMAND_BYE = "bye";
     private static final String COMMAND_LIST = "list";
@@ -11,6 +14,16 @@ public class Parser {
     private static final String COMMAND_DELETE = "delete ";
     private static final String COMMAND_FIND = "find ";
 
+    /**
+     * Parses and executes a user command.
+     *
+     * @param command Raw user command.
+     * @param tasks Task list to operate on.
+     * @param ui UI for rendering feedback.
+     * @param storage Storage for persisting task changes.
+     * @return True if the command should terminate the application.
+     * @throws YoruException If the command or arguments are invalid.
+     */
     public static boolean parse(String command, TaskList tasks, Ui ui, Storage storage) throws YoruException {
         if (command.equalsIgnoreCase(COMMAND_BYE)) {
             ui.showGoodbye();
@@ -84,6 +97,14 @@ public class Parser {
         throw new YoruException("I don't understand that command.");
     }
 
+    /**
+     * Extracts and parses a task index from a command.
+     *
+     * @param command Full user command.
+     * @param prefixLength Prefix length before the index starts.
+     * @return Zero-based task index.
+     * @throws YoruException If the index is missing or invalid.
+     */
     private static int parseTaskIndex(String command, int prefixLength) throws YoruException {
         try {
             return Integer.parseInt(command.substring(prefixLength).trim()) - 1;
