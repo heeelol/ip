@@ -45,13 +45,13 @@ public class TaskList {
         return task;
     }
 
-    public Task addDeadline(String description, String by) {
+    public Task addDeadline(String description, String by) throws YoruException {
         Task task = new Deadline(description, by);
         tasks.add(task);
         return task;
     }
 
-    public Task addEvent(String description, String from, String to) {
+    public Task addEvent(String description, String from, String to) throws YoruException {
         Task task = new Event(description, from, to);
         tasks.add(task);
         return task;
