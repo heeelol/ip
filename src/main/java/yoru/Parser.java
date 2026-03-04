@@ -41,12 +41,9 @@ public class Parser {
         } else if (command.startsWith(COMMAND_DEADLINE)) {
             String args = command.substring(COMMAND_DEADLINE.length());
             if (!args.contains(" /by ")) {
-                throw new YoruException("Deadline format: deadline <description> /by <yyyy-MM-dd>");
+                throw new YoruException("Deadline format: deadline <description> /by <time>");
             }
             String[] parts = args.split(" /by ", 2);
-            if (parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
-                throw new YoruException("Deadline format: deadline <description> /by <yyyy-MM-dd>");
-            }
             Task task = tasks.addDeadline(parts[0], parts[1]);
             ui.showTaskAdded(task, tasks.size());
             storage.save(tasks.getAll());
@@ -54,13 +51,10 @@ public class Parser {
         } else if (command.startsWith(COMMAND_EVENT)) {
             String args = command.substring(COMMAND_EVENT.length());
             if (!args.contains(" /from ") || !args.contains(" /to ")) {
-                throw new YoruException("Event format: event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>");
+                throw new YoruException("Event format: event <description> /from <start time> /to <end time>");
             }
             String[] parts = args.split(" /from ", 2);
             String[] timeParts = parts[1].split(" /to ", 2);
-            if (parts[0].trim().isEmpty() || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
-                throw new YoruException("Event format: event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>");
-            }
             Task task = tasks.addEvent(parts[0], timeParts[0], timeParts[1]);
             ui.showTaskAdded(task, tasks.size());
             storage.save(tasks.getAll());
