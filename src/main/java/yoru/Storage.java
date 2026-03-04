@@ -8,13 +8,21 @@ import java.util.ArrayList;
  * Handles loading and saving tasks to disk.
  */
 public class Storage {
-    private static final String FILE_PATH = "./data/yoru.txt";
+    private final String filePath;
+
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
 
     // Saves the current task list to disk.
-    public static void save(ArrayList<Task> tasks) {
+    public void save(ArrayList<Task> tasks) {
     try {
-        Files.createDirectories(Paths.get("./data"));
-        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
+        Path path = Paths.get(filePath);
+        Path parent = path.getParent();
+        if (parent != null) {
+            Files.createDirectories(parent);
+        }
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {
                 writer.println(task.toFileFormat());
             }
@@ -28,9 +36,9 @@ public class Storage {
      * Loads tasks from disk into the provided array.
      * Returns the number of tasks loaded.
      */
-    public static ArrayList<Task> load() {
+    public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
-        File file = new File(FILE_PATH);
+        File file = new File(filePath);
         if (!file.exists()) {
             return tasks;  // Return an empty list if the file does not exist
         }
