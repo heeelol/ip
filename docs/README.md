@@ -2,7 +2,7 @@
 
 ![Yoru Logo](yoru.jpg)
 
-**Yoru** is a task management chatbot designed for fast command-line usage. It helps you manage todos, deadlines, and events while automatically saving your progress.
+**Yoru** is a **valorant themed task management chatbot** designed for fast command-line usage. It helps you manage todos, deadlines, and events while automatically saving your progress.
 
 > *"Drop your command and I'll handle it from the shadows."*
 
