@@ -1,5 +1,6 @@
 package yoru;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
@@ -82,6 +83,20 @@ public class Ui {
         System.out.println("     Gone. Objective removed:");
         System.out.println("       " + task);
         System.out.println("     " + taskCount + " targets remain.");
+        showLine();
+    }
+
+    public void showMatchingTasks(ArrayList<Task> matchingTasks) {
+        System.out.println("     Here are the matching tasks in your list:");
+        if (matchingTasks.isEmpty()) {
+            System.out.println("     No matching tasks found.");
+            showLine();
+            return;
+        }
+
+        for (int i = 0; i < matchingTasks.size(); i++) {
+            System.out.println("     " + (i + 1) + "." + matchingTasks.get(i));
+        }
         showLine();
     }
 }

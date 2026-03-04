@@ -9,6 +9,7 @@ public class Parser {
     private static final String COMMAND_DEADLINE = "deadline ";
     private static final String COMMAND_EVENT = "event ";
     private static final String COMMAND_DELETE = "delete ";
+    private static final String COMMAND_FIND = "find ";
 
     public static boolean parse(String command, TaskList tasks, Ui ui, Storage storage) throws YoruException {
         if (command.equalsIgnoreCase(COMMAND_BYE)) {
@@ -70,6 +71,13 @@ public class Parser {
             Task removedTask = tasks.delete(index);
             ui.showTaskDeleted(removedTask, tasks.size());
             storage.save(tasks.getAll());
+            return false;
+        } else if (command.startsWith(COMMAND_FIND)) {
+            String keyword = command.substring(COMMAND_FIND.length()).trim();
+            if (keyword.isEmpty()) {
+                throw new YoruException("Find format: find <keyword>");
+            }
+            ui.showMatchingTasks(tasks.find(keyword));
             return false;
         }
 

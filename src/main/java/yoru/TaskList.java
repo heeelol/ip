@@ -62,6 +62,16 @@ public class TaskList {
         return tasks.remove(index);
     }
 
+    public ArrayList<Task> find(String keyword) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.containsKeyword(keyword)) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
+    }
+
     private void validateIndex(int index) throws YoruException {
         if (index < 0 || index >= tasks.size()) {
             throw new YoruException("Invalid task number.");

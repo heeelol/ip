@@ -33,6 +33,10 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public boolean containsKeyword(String keyword) {
+        return description.toLowerCase().contains(keyword.toLowerCase());
+    }
+
     public abstract String toFileFormat();
 
     /**
