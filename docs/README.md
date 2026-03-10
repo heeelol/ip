@@ -26,7 +26,7 @@
 ## Quick Start
 
 1. Ensure you have Java 17 or above installed.
-2. Download the latest `.jar` file from [Releases](../releases).
+2. Download the latest `.jar` file from [Releases](https://github.com/heeelol/ip/releases).
 3. Open a terminal in the folder containing the `.jar` file.
 4. Run `java -jar yoru.jar` (replace `yoru.jar` with the actual file name).
 5. Type commands in the terminal and press Enter.
