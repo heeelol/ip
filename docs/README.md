@@ -26,10 +26,11 @@
 ## Quick Start
 
 1. Ensure you have Java 17 or above installed.
-2. Clone or download this repository.
-3. Run `Yoru.main()` from your IDE.
-4. Type commands in the terminal and press Enter.
-5. Use `bye` to exit.
+2. Download the latest `.jar` file from [Releases](../../releases).
+3. Open a terminal in the folder containing the `.jar` file.
+4. Run `java -jar yoru.jar` (replace `yoru.jar` with the actual file name).
+5. Type commands in the terminal and press Enter.
+6. Use `bye` to exit.
 
 ## Features
 
